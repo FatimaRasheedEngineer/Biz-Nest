@@ -1,7 +1,7 @@
 
 
 import { useState } from "react"
-
+import mainBg from "../Assests/main.avif"
 function Pages() {
   const [activeTab, setActiveTab] = useState("about")
   const [faqOpen, setFaqOpen] = useState({})
@@ -137,7 +137,10 @@ function Pages() {
       )}
 
       {/* Page Header */}
-      <section className="bg-gradient-to-r from-orange-500 to-teal-600 py-16 text-white">
+       <section
+        className="relative py-16 text-white text-center bg-cover bg-center"
+        style={{ backgroundImage: `url(${mainBg})` }}
+      >
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-4">Information Pages</h1>
           <p className="text-xl">Everything you need to know about our directory</p>

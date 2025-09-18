@@ -1,5 +1,7 @@
+
 import { useState, useEffect } from "react"
 import { useParams, useNavigate, useLocation } from "react-router-dom"
+import mainBg from "../Assests/main.avif"
 
 function Categories() {
   const { name } = useParams()
@@ -76,13 +78,21 @@ function Categories() {
     )
 
   return (
-    <div className="min-h-screen bg-gray-50" > 
-      <section className="bg-gradient-to-r from-orange-500 to-teal-600 py-16 text-white text-center">
-        <h1 className="text-5xl font-bold mb-4">Business Categories</h1>
-        <p className="text-xl">Explore businesses by category</p>
+    <div className="min-h-screen bg-gray-50">
+      {/* ✅ Hero Section with Image */}
+      <section
+        className="relative py-16 text-white text-center bg-cover bg-center"
+        style={{ backgroundImage: `url(${mainBg})` }}
+      >
+        <div className="absolute inset-0 bg-black/50"></div> {/* overlay */}
+        <div className="relative z-10">
+          <h1 className="text-5xl font-bold mb-4">Business Categories</h1>
+          <p className="text-xl">Explore businesses by category</p>
+        </div>
       </section>
 
-      <section className="py-8 bg-white shadow-sm" > 
+      {/* Category Filter Section */}
+      <section className="py-8 bg-white shadow-sm">
         <div className="max-w-6xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex flex-wrap gap-2">
             <button
@@ -116,6 +126,7 @@ function Categories() {
         </div>
       </section>
 
+      {/* Businesses List */}
       <section className="py-12" data-aos="fade-up">
         <div className="max-w-6xl mx-auto px-4">
           {filteredCategories.map((cat) => (
@@ -153,3 +164,4 @@ function Categories() {
 }
 
 export default Categories
+

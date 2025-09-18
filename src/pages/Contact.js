@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { MapPin, Phone, Mail, Clock, Send } from "lucide-react";
-
+import mainBg from "../Assests/main.avif"
 const Contact = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -55,7 +55,10 @@ const Contact = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-teal-600 to-orange-500 py-20 text-white">
+       <section
+        className="relative py-16 text-white text-center bg-cover bg-center"
+        style={{ backgroundImage: `url(${mainBg})` }}
+      >
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-6">Contact Us</h1>
           <p className="text-xl max-w-3xl mx-auto">

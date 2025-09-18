@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import mainBg from "../Assests/main.avif"
 function Blog() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [subscribed, setSubscribed] = useState(false);
@@ -99,7 +99,10 @@ function Blog() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <section className="bg-gradient-to-r from-orange-500 to-teal-600 py-16 text-white">
+      <section
+             className="relative py-16 text-white text-center bg-cover bg-center"
+             style={{ backgroundImage: `url(${mainBg})` }}
+           >
         <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-5xl font-bold mb-4">Our Blog</h1>
           <p className="text-xl">

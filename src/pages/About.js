@@ -3,6 +3,7 @@ import Mission from "../Assests/Mission.jpg"
 import person1 from "../Assests/person1.jpg"
 import person2 from "../Assests/person2.jpg"
 import person3 from "../Assests/person3.jpg"
+import main from "../Assests/main.avif"   // 👈 background image import
 
 const About = () => {
   const stats = [
@@ -35,9 +36,14 @@ const About = () => {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-teal-600 to-orange-400 py-20 text-white">
-        <div className="container mx-auto px-4 text-center" >
+      {/* Hero Section with background image */}
+      <section
+        className="py-20 bg-cover bg-center bg-no-repeat relative text-white"
+        style={{
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(${main})`,
+        }}
+      >
+        <div className="container mx-auto px-4 text-center relative z-10">
           <h1 className="text-5xl font-bold mb-6">About Our Directory</h1>
           <p className="text-xl max-w-3xl mx-auto">
             We're dedicated to connecting businesses with customers through our comprehensive directory platform.
@@ -49,7 +55,7 @@ const About = () => {
       <section className="py-20 bg-stone-100">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div data-aos="fade-right"> 
+            <div data-aos="fade-right">
               <h2 className="text-4xl font-bold text-gray-800 mb-6">Our Mission</h2>
               <p className="text-gray-600 text-lg mb-6">
                 To create the most comprehensive and user-friendly business directory that helps local businesses thrive
@@ -68,7 +74,7 @@ const About = () => {
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-white" >
+      <section className="py-20 bg-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-800 mb-4">Our Impact</h2>
@@ -80,7 +86,7 @@ const About = () => {
               const Icon = stat.icon
               return (
                 <div key={index} className="text-center">
-                  <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" >
+                  <div className="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                     <Icon className="w-8 h-8 text-orange-500" />
                   </div>
                   <h3 className="text-3xl font-bold text-gray-800 mb-2">{stat.number}</h3>
@@ -102,8 +108,8 @@ const About = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {team.map((member, index) => (
-              <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden text-center" >
-                <img src={member.image} alt={member.name} className="w-full h-64 object-cover"  />
+              <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden text-center">
+                <img src={member.image} alt={member.name} className="w-full h-64 object-cover" />
                 <div className="p-6">
                   <h3 className="text-xl font-bold text-gray-800 mb-2">{member.name}</h3>
                   <p className="text-orange-500 font-semibold mb-4">{member.role}</p>

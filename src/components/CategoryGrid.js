@@ -20,7 +20,7 @@ const CategoryGrid = () => {
   }
 
   return (
-    <section  className="py-20 bg-stone-100 " data-aos="fade-up">
+    <section  className="py-20 bg-stone-200" data-aos="fade-up">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-gray-800 mb-4">
