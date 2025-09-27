@@ -58,3 +58,22 @@ html {
 .hover-lift:hover {
   transform: translateY(-5px);
 }
+
+/* ✅ Light mode default */
+body {
+  @apply bg-white text-gray-900;
+}
+
+/* ✅ Dark mode */
+.dark body {
+  @apply bg-black text-white;
+}
+
+/* ✅ Optional: dark scrollbar */
+.dark ::-webkit-scrollbar-track {
+  background: #1f1f1f;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #14b8a6; /* teal in dark */
+}

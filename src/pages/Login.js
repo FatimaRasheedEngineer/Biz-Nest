@@ -1,15 +1,32 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
 import axios from "axios";
 
 const Login = () => {
   const navigate = useNavigate();
+
+  // Hooks
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [user, setUser] = useState(null);
+
+  // Safe localStorage parsing
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem("user");
+      if (stored && stored !== "undefined") {
+        const parsedUser = JSON.parse(stored);
+        setUser(parsedUser);
+      }
+    } catch (err) {
+      console.error("Failed to parse user from localStorage:", err);
+      setUser(null);
+    }
+  }, []);
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -27,14 +44,18 @@ const Login = () => {
         password: formData.password,
       });
 
-      // ✅ Backend me abhi sirf message hai, isliye user object banana:
-      const userData = { email: formData.email }; // extra fields agar available ho to add kar sakte ho
-      localStorage.setItem("user", JSON.stringify(userData));
-      // Agar token return ho backend se:
-      // localStorage.setItem("token", res.data.token);
+      const loggedInUser = res.data.user;
+      localStorage.setItem("user", JSON.stringify(loggedInUser));
+      setUser(loggedInUser);
 
-      // Redirect dashboard
-      navigate("/dashboard");
+      // Admin check
+      if (loggedInUser.email === "fatimas0622@gmail.com") {
+        navigate("/admin"); // admin dashboard
+      } else {
+        navigate("/"); // normal user home
+      }
+
+      window.dispatchEvent(new Event("storage")); // trigger storage event for other components
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.message || "Something went wrong");
@@ -44,10 +65,16 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-stone-100 flex items-center justify-center py-12 px-4">
+    <div className="min-h-screen bg-stone-100 flex items-center justify-center py-12 px-4 relative">
+      <button
+        onClick={() => navigate("/")}
+        className="fixed top-5 right-5 bg-orange-500 hover:bg-orange-600 text-white py-2 px-4 rounded-lg font-semibold shadow-lg transition-colors z-50"
+      >
+        Go Back to Home
+      </button>
+
       <div className="max-w-md w-full">
-        {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <div className="flex items-center justify-center space-x-2 mb-4">
             <span className="text-4xl font-bold italic" style={{ color: "#f97316", fontFamily: "'Playfair Display', serif" }}>Biz</span>
             <span className="text-4xl font-bold italic" style={{ color: "#14b8a6", fontFamily: "'Playfair Display', serif" }}>Nest</span>
@@ -56,7 +83,6 @@ const Login = () => {
           <p className="text-gray-600">Sign in to your account to continue</p>
         </div>
 
-        {/* Login Form */}
         <div className="bg-white rounded-lg shadow-lg p-8">
           {error && (
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
@@ -106,37 +132,22 @@ const Login = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input id="remember-me" name="remember-me" type="checkbox" className="h-4 w-4 text-orange-500 focus:ring-orange-500 border-gray-300 rounded" />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">Remember me</label>
-              </div>
-              <div className="text-sm">
-                <a href="/" className="text-orange-500 hover:text-orange-600 font-medium">Forgot your password?</a>
-              </div>
-            </div>
-
             <button
               type="submit"
               disabled={isSubmitting}
               className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white py-3 px-4 rounded-lg font-semibold transition-colors flex items-center justify-center"
             >
-              {isSubmitting ? (
-                <>
-                  <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-                  Signing in...
-                </>
-              ) : (
-                "Sign In"
-              )}
+              {isSubmitting ? "Signing in..." : "Sign In"}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
-              Don&apos;t have an account?{" "}
-              <Link to="/register" className="text-orange-500 hover:text-orange-600 font-medium">Sign up here</Link>
-            </p>
+            {!user && (
+              <p className="text-sm text-gray-600">
+                Don't have an account?{" "}
+                <Link to="/register" className="text-orange-500 hover:text-orange-600 font-medium">Sign up here</Link>
+              </p>
+            )}
           </div>
         </div>
       </div>
